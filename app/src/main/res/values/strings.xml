@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">PixelStreet</string>
     <string name="facebook_app_id">1034367509962445</string>
-    <string name="skip_intro">Skip Intro</string>
-    <string name="title_activity_landing">Landing Activity</string>
-    <string name="navigation_drawer_open">navigation drawer open</string>
-    <string name="navigation_drawer_close">navigation drawer close</string>
+
+    <string name="title_activity_landing">LandingActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="skip_intro"> <u>skip intro</u></string>
+
 </resources>

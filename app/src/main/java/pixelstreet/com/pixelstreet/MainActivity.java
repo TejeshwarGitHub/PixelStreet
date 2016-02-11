@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -36,16 +37,33 @@ public class MainActivity extends AppCompatActivity {
     ViewPager mViewPager;
     TextView skip;
     View loginWrapper;
+    AccessTokenTracker accessTokenTracker=new AccessTokenTracker() {
+        @Override
+        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+            AccessToken.setCurrentAccessToken(currentAccessToken);
+            checkLoggedIn();
+        }
+    };
 
-    LoginFragment loginFragment;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        accessTokenTracker.startTracking();
+        checkLoggedIn();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        accessTokenTracker.startTracking();
+    }
+
     CallbackManager mCallbackManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
         checkLoggedIn();
         setContentView(R.layout.activity_main);
         mCallbackManager = CallbackManager.Factory.create();
@@ -70,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             protected void onCurrentProfileChanged(Profile profile, Profile profile1) {
                                 Log.e("facebook - profile", profile1.getFirstName());
+                                Profile.setCurrentProfile(profile1);
                                 mProfileTracker.stopTracking();
                             }
                         };
                         mProfileTracker.startTracking();
                         logIn();
-
 
                         // TODO: 21-10-2015  send user data to server,
                         // TODO: 21-10-2015 add user data to table
@@ -117,15 +135,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logIn() {
-        checkLoggedIn();
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void checkLoggedIn() {
 
         if (AccessToken.getCurrentAccessToken()!=null) {
-            Intent intent = new Intent(this, LandingActivity.class);
-            startActivity(intent);
-            finish();
+            logIn();
         }
     }
 
@@ -167,20 +185,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
- /*void printHashKey()
-    {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "pixelstreet.com.pixelstreet",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
-        }
-    }*/
