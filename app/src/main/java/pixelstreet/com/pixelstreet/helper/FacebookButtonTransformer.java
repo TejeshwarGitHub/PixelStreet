@@ -48,14 +48,12 @@ public class FacebookButtonTransformer implements ViewPager.PageTransformer  {
 
             if(position<1&& position>=0) {
                 loginWrapper.setTranslationY(-(1 - position) * (pageHeight / 2));
-                SpannableString content = new SpannableString("Maybe later");
-                content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-                ((TextView)loginWrapper.findViewById(R.id.skipLogin)).setText(content);
+                ((TextView)loginWrapper.findViewById(R.id.skipLogin)).setText("");
             }
             else if(position>=0.8){
                 SpannableString content = new SpannableString("skip intro");
                 content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-                ((TextView)loginWrapper.findViewById(R.id.skipLogin)).setText(content);
+                ((TextView)loginWrapper.findViewById(R.id.skipLogin)).setText("");
             }
 
         }

@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkLoggedIn() {
 
         if (AccessToken.getCurrentAccessToken()!=null) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LandingActivity.class);
             startActivity(intent);
             finish();
         }
