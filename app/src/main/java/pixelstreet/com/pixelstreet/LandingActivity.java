@@ -2,6 +2,8 @@ package pixelstreet.com.pixelstreet;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,8 +13,6 @@ import android.view.MenuItem;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
-import com.facebook.Profile;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,8 +46,6 @@ public class LandingActivity extends AppCompatActivity
 
 
         profilePic=(CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.profile_image);
-        Picasso.with(this).load(Profile.getCurrentProfile().getProfilePictureUri(100,100)).into(profilePic);
-
     }
 
 
@@ -60,7 +58,6 @@ public class LandingActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
 
     @Override
     protected void onStop() {
@@ -75,6 +72,15 @@ public class LandingActivity extends AppCompatActivity
         int id = item.getItemId();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        switch(id){
+            case R.id.nav_home:
+                Fragment fragment= new Open_Land_Fragment();
+                FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.landing_container,fragment).commit();
+                break;
+
+        }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

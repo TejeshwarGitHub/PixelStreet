@@ -19,7 +19,6 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
@@ -28,7 +27,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.Arrays;
 
-import pixelstreet.com.pixelstreet.helper.FacebookButtonTransformer;
+import pixelstreet.com.pixelstreet.anim.FacebookButtonTransformer;
 
 public class MainActivity extends AppCompatActivity {
 
