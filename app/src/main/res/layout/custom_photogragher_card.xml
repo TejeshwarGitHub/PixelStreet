@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_margin="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/card_header"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+                <LinearLayout
+                    android:paddingLeft="12dp"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="#000000"
+                        android:text="Tejeshwar Reddy"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:textSize="24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:text="Freelancer and Development "
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="#000000"
+                        android:textSize="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/ic_map_marker"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+                        <TextView
+                            android:padding="2dp"
+                            android:textColor="#000000"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Visakhapatnam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@+id/card_header"
+                android:orientation="vertical"
+                android:id="@+id/card_moreinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--<LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+
+                        android:paddingRight="100dp"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/ic_phone"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+                        <TextView
+                            android:text="Phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/ic_email"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+                        <TextView
+                            android:text="Email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp" />
+                    </LinearLayout>
+                </LinearLayout>-->
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/ic_map_marker_multiple"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" />
+                        <TextView
+                            android:textColor="#000000"
+                            android:gravity="center"
+                            android:text="Location"
+                            android:textSize="18dp"
+                            android:fontFamily="sans-serif"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/ic_map_marker_multiple"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" />
+                        <TextView
+                            android:textColor="#000000"
+                            android:gravity="center"
+                            android:text="Budget"
+                            android:textSize="18dp"
+                            android:fontFamily="sans-serif"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/ic_format_list_bulleted_type"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" />
+                        <TextView
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:text="Categories"
+                            android:textSize="18dp"
+                            android:fontFamily="sans-serif"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:id="@+id/profile_rating_layout"
+                android:layout_below="@+id/card_moreinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RatingBar
+                    android:id="@+id/profile_rating"
+                    android:layout_height="30dp"
+                    android:layout_width="160dp"
+                    android:numStars="5"
+                    android:rating="3.5"
+                    android:isIndicator="false"
+                    style="@style/foodRatingBar" />
+            </LinearLayout>
+            <HorizontalScrollView
+                android:layout_below="@+id/profile_rating_layout"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <LinearLayout
+                    android:padding="8dp"
+                    android:id="@+id/linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+                    <ImageView
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" />
+                    <ImageView
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" />
+                    <ImageView
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" />
+                    <ImageView
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" />
+                    <ImageView
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" />
+                    <ImageView
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

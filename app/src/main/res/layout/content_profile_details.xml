@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="pixelstreet.com.pixelstreet.ProfileDetailsActivity"
+    tools:showIn="@layout/activity_profile_details">
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:paddingTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview"
+                app:cardCornerRadius="3dp"
+                android:padding="20dp"
+                android:layout_gravity="center"
+                android:layout_width="325dp"
+                android:layout_height="200dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:text="The Birla Institute of Technology and Science, BITS Pilani is an all-India Institute for higher education. The primary motive of BITS is to train young men and women able and eager to create and put into action such ideas, methods, techniques and information"
+                    android:layout_width="fill_parent"
+                    android:padding="10dp"
+                    app:cardCornerRadius="3dp"
+                    android:textSize="18sp"
+                    android:layout_height="fill_parent" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview1"
+                android:layout_gravity="center"
+                android:layout_width="325dp"
+                app:cardCornerRadius="3dp"
+                android:padding="20dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/cardview"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:textAlignment="center"
+                    android:padding="10dp" android:textSize="18sp"
+                    android:text="BITS mission is to advance knowledge and educate students in science, technology, and other areas of scholarship that will best serve the nation and the world in the 21st century."
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview2"
+                android:layout_gravity="center"
+                android:layout_width="325dp"
+                android:padding="20dp"
+
+                app:cardCornerRadius="3dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/cardview1"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:text="Our commitment to transparency and stress on equal opportunity has been a key contributing factor behind our emergence as an institute of national repute"
+                    android:layout_width="fill_parent"
+                    android:textSize="18sp"
+                    android:padding="10dp"
+                    android:layout_height="fill_parent" />
+
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview3"
+                android:layout_gravity="center"
+                android:layout_width="325dp"
+                app:cardCornerRadius="3dp"
+                android:layout_height="200dp"
+                android:padding="20dp"
+                android:layout_below="@+id/cardview2"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:text="The pursuit of excellence requires a transparent and honest approach. At BITS Pilani, we have always believed this to be true and are one of the few top institutes in India to favour a ‘Merit Only’ based admission policy."
+                    android:layout_width="fill_parent"
+                    android:padding="10dp" android:textSize="18sp"
+                    android:layout_height="fill_parent" />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>
