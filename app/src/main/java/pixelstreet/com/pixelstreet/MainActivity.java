@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logIn() {
-        Intent intent = new Intent(this, LandingActivity.class);
+        Intent intent = new Intent(this, ProfessionsActivity.class);
         startActivity(intent);
         finish();
     }

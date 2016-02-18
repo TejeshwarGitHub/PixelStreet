@@ -27,8 +27,8 @@
         <activity
             android:name=".LandingActivity"
             android:label="@string/title_activity_landing"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".ProfessionsActivity"
+            android:theme="@style/Newstand" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -42,6 +42,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pixelstreet.com.pixelstreet.LandingActivity" />
+        </activity>
+        <activity
+            android:name=".ProfessionsActivity"
+            android:label="@string/title_activity_professions"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 

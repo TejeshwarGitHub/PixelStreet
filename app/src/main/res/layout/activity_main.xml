@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00aeac"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="pixelstreet.com.pixelstreet.MainActivity">
 
     <ImageView
@@ -23,13 +22,12 @@
             android:id="@+id/circle_indicators"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/loginTextContainer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-
-
 
         <LinearLayout
             android:id="@+id/loginWrapper"
@@ -47,8 +45,8 @@
                 android:layout_height="48dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp" />
--->
+                android:layout_marginBottom="30dp" />-->
+
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
@@ -68,5 +66,7 @@
                 android:textSize="16sp"/>
 
         </LinearLayout>
+
     </LinearLayout>
+
 </RelativeLayout>
