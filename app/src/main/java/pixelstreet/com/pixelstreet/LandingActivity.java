@@ -134,13 +134,13 @@ public class LandingActivity extends AppCompatActivity
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
                     case 0:
-                        Bitmap icon2 = ((BitmapDrawable) image.getDrawable()).getBitmap();
+                        Bitmap icon2 =null;//= ((BitmapDrawable) image.getDrawable()).getBitmap();
 
                         Palette.generateAsync(icon2, new Palette.PaletteAsyncListener() {
                             @Override
                             public void onGenerated(Palette palette) {
-                                int primaryDark = getResources().getColor(R.color.primary_dark);
-                                int primary = getResources().getColor(R.color.primary);
+                                int primaryDark = getResources().getColor(R.color.colorPrimaryDark);
+                                int primary = getResources().getColor(R.color.colorPrimary);
                                 palette.getMutedColor(primary);
                                 palette.getDarkVibrantColor(primaryDark);
                             }
