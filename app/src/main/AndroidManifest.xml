@@ -3,6 +3,7 @@
     package="pixelstreet.com.pixelstreet">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name="app.AppController"
@@ -17,8 +18,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".LandingActivity"
             android:label="@string/title_activity_landing"
@@ -33,15 +33,18 @@
             android:name=".ProfileDetailsActivity"
             android:label="@string/title_activity_profile_details"
             android:parentActivityName=".LandingActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ProfessionsActivity"
             android:label="@string/title_activity_professions"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".LoginActivity2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".AppIntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

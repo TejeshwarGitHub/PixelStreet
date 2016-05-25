@@ -6,39 +6,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
     android:padding="16dp"
-    tools:context="pixelstreet.com.pixelstreet.LoginActivity2">
+    tools:context=".LoginActivity">
 
-    <ImageView
-        android:id="@+id/logo"
+    <LinearLayout
+        android:weightSum="3"
+        android:orientation="vertical"
+        android:id="@+id/logo_container"
         android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:src="@drawable/example_logo" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/g_sign_in_button"
-        app:buttonSize="wide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
-
-    <Button
-        android:textColor="#fff"
-        android:textStyle="bold"
-        android:id="@+id/fb_sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_below="@+id/g_sign_in_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:drawableLeft="@drawable/com_facebook_button_icon_white"
-        android:drawableStart="@drawable/com_facebook_button_icon_white"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:background="@color/com_facebook_blue"
-        android:text="   Log in with Facebook"
-        android:textAllCaps="false"
-        android:translationZ="4dp" />
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_weight="4"
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/example_logo" />
+        <com.google.android.gms.common.SignInButton
+            android:layout_gravity="center"
+            android:id="@+id/g_sign_in_button"
+            app:buttonSize="wide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+        <Button
+            android:layout_gravity="center"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:id="@+id/fb_sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/g_sign_in_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:drawableLeft="@drawable/com_facebook_button_icon_white"
+            android:drawableStart="@drawable/com_facebook_button_icon_white"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@color/com_facebook_blue"
+            android:text="   Log in with Facebook"
+            android:textAllCaps="false"
+            android:translationZ="4dp" />
+    </LinearLayout>
 
 </RelativeLayout>
