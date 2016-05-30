@@ -14,7 +14,21 @@ public class AppIntroActivity extends AppIntro {
     // Please DO NOT override onCreate. Use init.
     @Override
     public void init(Bundle savedInstanceState) {
+/*
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "pixelstreet.com.pixelstreet",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
 
+        } catch (NoSuchAlgorithmException e) {
+
+        }*/
         // Add your slide's fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
         addSlide(IntroFragment.newInstance(R.layout.intro));
