@@ -19,6 +19,8 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
@@ -43,6 +45,8 @@ import app.ControllerConstants;
 import helper.UserModel;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -57,6 +61,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     Button btn_fb_login;
     SignInButton signInButton;
+
+    //facebook
+    //facebook
+    //facebook
+    //facebook
+    //facebook
+    RealmConfiguration realmConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +105,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         realmConfig = new RealmConfiguration.Builder(this)
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        realm=Realm.getInstance(realmConfig);
+        realm = Realm.getInstance(realmConfig);
+
+
 
 
         // facebook
@@ -105,30 +119,23 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         checkLoggedIn();
         mCallbackManager = CallbackManager.Factory.create();
 
+
+        final LoginManager loginManager = LoginManager.getInstance();
+
         btn_fb_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends"));
+                loginManager.logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends","email"));
             }
         });
 
-        LoginManager.getInstance().registerCallback(mCallbackManager,
+        loginManager.registerCallback(mCallbackManager,
                 new FacebookCallback<LoginResult>() {
-                    private ProfileTracker mProfileTracker;
-
                     @Override
-                    public void onSuccess(LoginResult loginResult) {
+                    public void onSuccess(final LoginResult loginResult) {
                         Log.e("LoginFacebook", "Success");
-                        mProfileTracker = new ProfileTracker() {
-                            @Override
-                            protected void onCurrentProfileChanged(Profile profile, Profile profile1) {
-                                Log.e("facebook - profile", profile1.getFirstName());
-                                Profile.setCurrentProfile(profile1);
-                                mProfileTracker.stopTracking();
-                            }
-                        };
-                        mProfileTracker.startTracking();
-                        logIn();
+                        Profile profile=Profile.getCurrentProfile();
+                        handleSignInResult(loginResult,profile);
 
                         // TODO: 21-10-2015  send user data to server,
                         // TODO: 21-10-2015 add user data to table
@@ -148,35 +155,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
-    //facebook
-    //facebook
-    //facebook
-    //facebook
-    //facebook
-
-    AccessTokenTracker accessTokenTracker=new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-            AccessToken.setCurrentAccessToken(currentAccessToken);
-            checkLoggedIn();
-        }
-    };
-
     private void logIn() {
         Intent intent = new Intent(this, ProfessionsActivity.class);
-        startActivityForResult(intent,FB_SIGN);
+        startActivity(intent);
         finish();
     }
 
     private void checkLoggedIn() {
-
-        if (AccessToken.getCurrentAccessToken()!=null) {
+        RealmQuery<UserModel> query = realm.where(UserModel.class);
+        RealmResults<UserModel> result1 = query.findAll();
+        if(result1.size()>0){
             logIn();
         }
     }
-
-
-    RealmConfiguration realmConfig;
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -197,13 +188,79 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 handleSignInResult(result);
             }
-        }else if (requestCode==FB_SIGN){
+        } else {
             //facebook
-            if (resultCode==RESULT_OK) {
-                mCallbackManager.onActivityResult(requestCode, resultCode, data);
-            }
+
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
+
+
         }
     }
+
+    private void handleSignInResult(final LoginResult loginResult, final Profile profile) {
+        GraphRequest request=GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                    sendUserToServer(object,loginResult);
+            }
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "name,email");
+        request.setParameters(parameters);
+        request.executeAsync();
+
+
+    }
+
+    private void sendUserToServer(final JSONObject object, final LoginResult loginResult) {
+
+        dialog.show();
+
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, ControllerConstants.url_users, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        Log.i("Response", jsonObject.toString());
+                        //{"_id":"571ea6ea71b6acf21921902f","username":"Harshit Agarwal","email":"harsu.ag@gmail.com","__v":0,"updated_at":"2016-04-25T23:23:22.361Z","logs":[]}
+                        //response
+                        storeData(jsonObject, loginResult,object);
+                        dialog.hide();
+                        //todo start activity
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("Error", volleyError.toString());
+                Toast.makeText(LoginActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                dialog.hide();
+            }
+        }) {
+            @Override
+            public byte[] getBody() {
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("username", object.getString("name"));
+                    jsonObject.put("email", object.getString("email"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String body = jsonObject.toString();
+                return body.getBytes();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+        };
+        AppController.getInstance().addToRequestQueue(objectRequest);
+    }
+
 
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
@@ -266,6 +323,26 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         };
         AppController.getInstance().addToRequestQueue(objectRequest);
     }
+    private void storeData(JSONObject jsonObject, LoginResult loginResult, JSONObject profileData) {
+        Profile profile=Profile.getCurrentProfile();
+        try {
+            realm.beginTransaction();
+            UserModel userModel = realm.createObject(UserModel.class);
+            userModel.setEmail(profileData.getString("email"));
+            userModel.setImage_url(profile.getProfilePictureUri(72,72) == null ? "" : profile.getProfilePictureUri(72,72).toString());
+            userModel.setName(profile.getName());
+            userModel.setProfile_id(profile.getId());
+            userModel.setServer_id(jsonObject.getString("_id"));
+            realm.commitTransaction();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (RealmPrimaryKeyConstraintException e) {
+
+            realm.cancelTransaction();
+        }
+
+    }
+
 
     private void storeData(JSONObject jsonObject, GoogleSignInAccount account) {
         try {
@@ -290,14 +367,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onResume() {
         super.onResume();
-        accessTokenTracker.startTracking();
         checkLoggedIn();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        accessTokenTracker.startTracking();
     }
 
     @Override
