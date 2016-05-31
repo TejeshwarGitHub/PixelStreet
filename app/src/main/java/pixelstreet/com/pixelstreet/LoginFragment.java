@@ -67,6 +67,5 @@ public class LoginFragment extends Fragment {
                 text.setImageResource(R.drawable.whirl);
                 break;
         }
-
     }
 }
