@@ -11,9 +11,17 @@ public class UserModel extends RealmObject {
     //    {"_id":"571ea6ea71b6acf21921902f","username":"Harshit Agarwal","email":"harsu.ag@gmail.com","__v":0,"updated_at":"2016-04-25T23:23:22.361Z","logs":[]}
     @Required
     String server_id, name, email, image_url;
-
+    int socialAccount;
     @PrimaryKey
     String profile_id;
+
+    public int getSocialAccount() {
+        return socialAccount;
+    }
+
+    public void setSocialAccount(int socialAccount) {
+        this.socialAccount = socialAccount;
+    }
 
     public String getServer_id() {
         return server_id;

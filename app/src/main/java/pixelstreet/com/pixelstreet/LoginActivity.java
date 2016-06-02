@@ -9,20 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
@@ -33,23 +25,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
-import app.AppController;
-import app.ControllerConstants;
-import helper.UserModel;
+import app.AccountManager;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
-import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, AccountManager.Callback {
 
     private static final int RC_SIGN_IN = 246;
     private static final int FB_SIGN = 123;
@@ -62,12 +45,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     Button btn_fb_login;
     SignInButton signInButton;
 
+    AccountManager accountManager;
     //facebook
     //facebook
     //facebook
     //facebook
     //facebook
-    RealmConfiguration realmConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +65,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setInverseBackgroundForced(false);
+
+        accountManager = new AccountManager(this, this);
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -102,13 +88,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-        realmConfig = new RealmConfiguration.Builder(this)
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        realm = Realm.getInstance(realmConfig);
-
-
-
 
         // facebook
         // facebook
@@ -116,7 +95,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // facebook
         // facebook
 
-        checkLoggedIn();
+        if (accountManager.isLoggedIn() != AccountManager.NO_ACCOUNT) {
+            logIn();
+        }
         mCallbackManager = CallbackManager.Factory.create();
 
 
@@ -125,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btn_fb_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginManager.logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends","email"));
+                loginManager.logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends", "email"));
             }
         });
 
@@ -134,11 +115,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
                         Log.e("LoginFacebook", "Success");
-                        Profile profile=Profile.getCurrentProfile();
-                        handleSignInResult(loginResult,profile);
+                        Profile profile = Profile.getCurrentProfile();
+                        handleSignInResult(loginResult, profile);
 
-                        // TODO: 21-10-2015  send user data to server,
-                        // TODO: 21-10-2015 add user data to table
                     }
 
                     @Override
@@ -154,20 +133,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
-
     private void logIn() {
         Intent intent = new Intent(this, ProfessionsActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void checkLoggedIn() {
-        RealmQuery<UserModel> query = realm.where(UserModel.class);
-        RealmResults<UserModel> result1 = query.findAll();
-        if(result1.size()>0){
-            logIn();
-        }
-    }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -187,6 +158,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (resultCode == RESULT_OK) {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 handleSignInResult(result);
+
             }
         } else {
             //facebook
@@ -198,10 +170,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void handleSignInResult(final LoginResult loginResult, final Profile profile) {
-        GraphRequest request=GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+        dialog.show();
+        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
-                    sendUserToServer(object,loginResult);
+                accountManager.sendUserToServer(object, loginResult);
             }
         });
         Bundle parameters = new Bundle();
@@ -212,55 +185,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
-    private void sendUserToServer(final JSONObject object, final LoginResult loginResult) {
-
-        dialog.show();
-
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, ControllerConstants.url_users, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        Log.i("Response", jsonObject.toString());
-                        //{"_id":"571ea6ea71b6acf21921902f","username":"Harshit Agarwal","email":"harsu.ag@gmail.com","__v":0,"updated_at":"2016-04-25T23:23:22.361Z","logs":[]}
-                        //response
-                        storeData(jsonObject, loginResult,object);
-                        dialog.hide();
-                        //todo start activity
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.e("Error", volleyError.toString());
-                Toast.makeText(LoginActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                dialog.hide();
-            }
-        }) {
-            @Override
-            public byte[] getBody() {
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("username", object.getString("name"));
-                    jsonObject.put("email", object.getString("email"));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                String body = jsonObject.toString();
-                return body.getBytes();
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-        };
-        AppController.getInstance().addToRequestQueue(objectRequest);
-    }
-
 
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
@@ -269,7 +193,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInAccount acct = result.getSignInAccount();
             // Snackbar.make() .setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             Toast.makeText(LoginActivity.this, acct.getDisplayName(), Toast.LENGTH_SHORT).show();
-            sendUserToServer(acct);
+            accountManager.sendUserToServer(acct);
+            dialog.show();
 //            updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -277,97 +202,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private void sendUserToServer(final GoogleSignInAccount result) {
-        dialog.show();
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, ControllerConstants.url_users, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        Log.i("Response", jsonObject.toString());
-                        //{"_id":"571ea6ea71b6acf21921902f","username":"Harshit Agarwal","email":"harsu.ag@gmail.com","__v":0,"updated_at":"2016-04-25T23:23:22.361Z","logs":[]}
-                        //response
-                        storeData(jsonObject, result);
-                        dialog.hide();
-                        //todo start activity
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.e("Error", volleyError.toString());
-                Toast.makeText(LoginActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                dialog.hide();
-            }
-        }) {
-            @Override
-            public byte[] getBody() {
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("username", result.getDisplayName());
-                    jsonObject.put("email", result.getEmail());
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                String body = jsonObject.toString();
-                return body.getBytes();
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-        };
-        AppController.getInstance().addToRequestQueue(objectRequest);
-    }
-    private void storeData(JSONObject jsonObject, LoginResult loginResult, JSONObject profileData) {
-        Profile profile=Profile.getCurrentProfile();
-        try {
-            realm.beginTransaction();
-            UserModel userModel = realm.createObject(UserModel.class);
-            userModel.setEmail(profileData.getString("email"));
-            userModel.setImage_url(profile.getProfilePictureUri(72,72) == null ? "" : profile.getProfilePictureUri(72,72).toString());
-            userModel.setName(profile.getName());
-            userModel.setProfile_id(profile.getId());
-            userModel.setServer_id(jsonObject.getString("_id"));
-            realm.commitTransaction();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (RealmPrimaryKeyConstraintException e) {
-
-            realm.cancelTransaction();
-        }
-
-    }
-
-
-    private void storeData(JSONObject jsonObject, GoogleSignInAccount account) {
-        try {
-            realm.beginTransaction();
-            UserModel userModel = realm.createObject(UserModel.class);
-            userModel.setEmail(account.getEmail());
-            userModel.setImage_url(account.getPhotoUrl() == null ? "" : account.getPhotoUrl().toString());
-            userModel.setName(account.getDisplayName());
-            userModel.setProfile_id(account.getId());
-            userModel.setServer_id(jsonObject.getString("_id"));
-            realm.commitTransaction();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (RealmPrimaryKeyConstraintException e) {
-
-            realm.cancelTransaction();
-        }
-
-
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        checkLoggedIn();
+
     }
 
     @Override
@@ -379,5 +218,36 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onDestroy() {
         super.onDestroy();
         dialog.dismiss();
+    }
+
+    @Override
+    public void successfulSignIn() {
+        dialog.hide();
+        logIn();
+    }
+
+    /**
+     * Error occurred during communicating with backend server
+     *
+     * @param error {@link AccountManager#NO_INTERNET_CONNECTION} or {@link AccountManager#UNKNOWN_ERROR}
+     */
+    @Override
+    public void signInError(int error) {
+        String errorMessage = "";
+        dialog.hide();
+        if (error == AccountManager.UNKNOWN_ERROR)
+            errorMessage = "Unknown Error occurred, please retry";
+        else {
+            errorMessage = "Please check your internet connection and retry";
+        }
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+
+        //todo remove this when we have a server
+        logIn();
+    }
+
+    @Override
+    public void loggedOut() {
+
     }
 }
