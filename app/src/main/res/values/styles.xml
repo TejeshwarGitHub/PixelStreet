@@ -17,13 +17,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+    <style name="RatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ratingstars</item>
-        <item name="android:minHeight">18dip</item>
-        <item name="android:maxHeight">22dip</item>
+        <item name="android:minHeight">10dip</item>
+        <item name="android:maxHeight">15dip</item>
+        <item name="colorControlNormal">@color/duskYellow</item>
+        <item name="colorControlActivated">@color/lightGrey</item>
+        <item name="android:colorActivatedHighlight">@color/duskYellow</item>
     </style>
 
-    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light"></style>
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light">
+    </style>
 
     <style name="Newstand" parent="AppBaseTheme">
 

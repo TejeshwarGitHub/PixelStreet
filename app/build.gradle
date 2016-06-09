@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "pixelstreet.com.pixelstreet"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -24,6 +24,11 @@ android {
 repositories {
     mavenCentral()
 }
+
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -43,4 +48,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:8.3.0'
     compile 'com.github.paolorotolo:appintro:3.4.0'
     compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
+    compile 'com.github.Plumillon:ChipView:1.1.4'
+    compile 'com.veinhorn.scrollgalleryview:library:1.0.5'
 }

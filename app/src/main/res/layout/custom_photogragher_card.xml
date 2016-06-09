@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -8,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_margin="8dp"
         android:layout_height="wrap_content">
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_margin="4dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -21,8 +23,8 @@
                 <ImageView
                     android:layout_gravity="center"
                     android:src="@mipmap/ic_launcher"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
                 <LinearLayout
                     android:paddingLeft="12dp"
                     android:layout_margin="16dp"
@@ -33,14 +35,13 @@
                         android:textColor="#000000"
                         android:text="Tejeshwar Reddy"
                         android:fontFamily="sans-serif-smallcaps"
-                        android:textSize="24dp"
+                        android:textSize="22dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
                         android:text="Freelancer and Development "
                         android:fontFamily="sans-serif-medium"
                         android:textColor="#000000"
-                        android:textSize="12dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <LinearLayout
@@ -116,16 +117,15 @@
                         android:layout_height="wrap_content">
                         <ImageView
                             android:src="@drawable/ic_map_marker_multiple"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp" />
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
                         <TextView
                             android:textColor="#000000"
                             android:gravity="center"
                             android:text="Location"
-                            android:textSize="18dp"
                             android:fontFamily="sans-serif"
                             android:layout_width="wrap_content"
-                            android:layout_height="40dp" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                     <LinearLayout
                         android:gravity="center"
@@ -135,16 +135,15 @@
                         android:layout_height="wrap_content">
                         <ImageView
                             android:src="@drawable/ic_map_marker_multiple"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp" />
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
                         <TextView
                             android:textColor="#000000"
                             android:gravity="center"
                             android:text="Budget"
-                            android:textSize="18dp"
                             android:fontFamily="sans-serif"
                             android:layout_width="wrap_content"
-                            android:layout_height="40dp" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -153,24 +152,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <ImageView
-                            android:src="@drawable/ic_format_list_bulleted_type"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp" />
+                        <!--<ImageView-->
+                        <!--android:src="@drawable/ic_format_list_bulleted_type"-->
+                        <!--android:layout_width="20dp"-->
+                        <!--android:layout_height="20dp" />-->
                         <TextView
                             android:gravity="center"
                             android:textColor="#000000"
-                            android:text="Categories"
-                            android:textSize="18dp"
+                            android:paddingLeft="20dp"
+                            android:text="Expertise  "
                             android:fontFamily="sans-serif"
                             android:layout_width="wrap_content"
-                            android:layout_height="40dp" />
+                            android:layout_height="wrap_content" />
+                        <com.plumillonforge.android.chipview.ChipView
+                            android:id="@+id/chipview"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
             <LinearLayout
                 android:gravity="center"
@@ -180,51 +183,32 @@
                 android:layout_height="wrap_content">
                 <RatingBar
                     android:id="@+id/profile_rating"
-                    android:layout_height="30dp"
-                    android:layout_width="160dp"
+                    android:layout_height="20dp"
+                    android:layout_width="80dp"
                     android:numStars="5"
                     android:rating="3.5"
-                    android:isIndicator="false"
-                    style="@style/foodRatingBar" />
+                    android:isIndicator="true"
+                    android:progressTint="@color/duskYellow"
+                    android:secondaryProgressTint="@color/vpi__bright_foreground_disabled_holo_light"
+                    style="?android:attr/ratingBarStyleSmall" />
             </LinearLayout>
-            <HorizontalScrollView
-                android:layout_below="@+id/profile_rating_layout"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
-                <LinearLayout
-                    android:padding="8dp"
-                    android:id="@+id/linear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp" />
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp" />
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp" />
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp" />
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp" />
-                    <ImageView
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
-        </RelativeLayout>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:paddingLeft="20dp"
+                    android:textColor="#000000"
+                    android:text="Photos Clicked"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/horizontal_imagescroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 </FrameLayout>

@@ -1,7 +1,5 @@
 package pixelstreet.com.pixelstreet;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,7 +64,7 @@ public class LandingActivity extends AppCompatActivity
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
 
         toolbar = mViewPager.getToolbar();
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout_landing);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -134,17 +131,6 @@ public class LandingActivity extends AppCompatActivity
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
                     case 0:
-                        Bitmap icon2 =null;//= ((BitmapDrawable) image.getDrawable()).getBitmap();
-
-                        Palette.generateAsync(icon2, new Palette.PaletteAsyncListener() {
-                            @Override
-                            public void onGenerated(Palette palette) {
-                                int primaryDark = getResources().getColor(R.color.colorPrimaryDark);
-                                int primary = getResources().getColor(R.color.colorPrimary);
-                                palette.getMutedColor(primary);
-                                palette.getDarkVibrantColor(primaryDark);
-                            }
-                        });
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.green,
                                 "http://bits-pearl.org/Events/img/Photog%20Retrospective%20WebBanner.jpg");
@@ -193,12 +179,12 @@ public class LandingActivity extends AppCompatActivity
                 }
             });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_landing);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view_landing);
         navigationView.setNavigationItemSelectedListener(this);
         profilePic = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.profile_image);
         setProfile();
@@ -217,7 +203,7 @@ public class LandingActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_landing);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -238,7 +224,7 @@ public class LandingActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_landing);
 
         switch (id) {
             case R.id.nav_home:

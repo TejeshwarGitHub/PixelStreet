@@ -32,7 +32,7 @@ import java.util.Arrays;
 import app.AccountManager;
 import io.realm.Realm;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, AccountManager.Callback {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,AccountManager.Callback {
 
     private static final int RC_SIGN_IN = 246;
     private static final int FB_SIGN = 123;
@@ -193,7 +193,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInAccount acct = result.getSignInAccount();
             // Snackbar.make() .setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             Toast.makeText(LoginActivity.this, acct.getDisplayName(), Toast.LENGTH_SHORT).show();
-            accountManager.sendUserToServer(acct);
+//            accountManager.sendUserToServer(acct);
             dialog.show();
 //            updateUI(true);
         } else {
@@ -219,7 +219,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onDestroy();
         dialog.dismiss();
     }
-
+//
     @Override
     public void successfulSignIn() {
         dialog.hide();

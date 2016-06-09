@@ -34,6 +34,7 @@ public class MaterialRecyclerViewFragment extends Fragment implements RecyclerCl
         return new MaterialRecyclerViewFragment();
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false);
@@ -47,7 +48,7 @@ public class MaterialRecyclerViewFragment extends Fragment implements RecyclerCl
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new MaterialRecyclerViewAdapter(mContentItems));
+        mAdapter = new RecyclerViewMaterialAdapter(new MaterialRecyclerViewAdapter(getActivity().getApplicationContext(),mContentItems));
         mRecyclerView.setAdapter(mAdapter);
 
         {
