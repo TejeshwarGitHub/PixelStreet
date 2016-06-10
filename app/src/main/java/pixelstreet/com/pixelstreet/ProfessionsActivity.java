@@ -29,11 +29,12 @@ import java.util.HashMap;
 
 import anim.FeedItemAnimator;
 import pixelstreet.com.pixelstreet.helper.RecyclerClickListener;
+import pixelstreet.com.pixelstreet.helper.VerticalSpaceItemDecoration;
 
 public class ProfessionsActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener,RecyclerClickListener,NavigationView.OnNavigationItemSelectedListener{
 
     RecyclerView recyclerView;
-    SliderLayout mDemoSlider;
+//    SliderLayout mDemoSlider;
     ArrayList tabs;
     NavigationView navigationView;
     ActionBarDrawerToggle mDrawerToggle;
@@ -52,18 +53,18 @@ public class ProfessionsActivity extends AppCompatActivity implements BaseSlider
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view_profession);
         navigationView.setNavigationItemSelectedListener(this);
-        mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+//        mDemoSlider = (SliderLayout)findViewById(R.id.slider);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
         mDrawer.setDrawerListener(mDrawerToggle);
 
-        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+      /*  HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
         //can also put url as second parameter
         file_maps.put("Slide 1",R.drawable.ic_slide1);
         file_maps.put("Slide 2",R.drawable.ic_slide2);
         file_maps.put("Slide 3",R.drawable.ic_slide3);
-        file_maps.put("Slide 4", R.drawable.ic_slide4);
+        file_maps.put("Slide 4", R.drawable.ic_slide4);*/
 
-        for(String name : file_maps.keySet()){
+       /* for(String name : file_maps.keySet()){
             TextSliderView textSliderView = new TextSliderView(this);
             // initialize a SliderLayout
             textSliderView
@@ -78,27 +79,28 @@ public class ProfessionsActivity extends AppCompatActivity implements BaseSlider
                     .putString("extra",name);
 
             mDemoSlider.addSlider(textSliderView);
-        }
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        }*/
+        /*mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
         mDemoSlider.setDuration(4000);
         mDemoSlider.addOnPageChangeListener(this);
-
+*/
         recyclerView = (RecyclerView) findViewById(R.id.profession_chooser_recycler);
         EventChooserAdapter mAdapter = new EventChooserAdapter(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         tabs = new ArrayList<>();
-        tabs.add(new EventChooserSet("Photographer", R.drawable.whirl));
-        tabs.add(new EventChooserSet("Videographer", R.drawable.whirl));
-        tabs.add(new EventChooserSet("Cinematography", R.drawable.whirl));
-        tabs.add(new EventChooserSet("Studios", R.drawable.whirl));
-        tabs.add(new EventChooserSet("Photo Booths", R.drawable.whirl));
-        tabs.add(new EventChooserSet("Photo Albums",R.drawable.whirl));
+        tabs.add(new EventChooserSet("Photographer", R.drawable.camera));
+        tabs.add(new EventChooserSet("Videographer", R.drawable.video));
+        tabs.add(new EventChooserSet("Cinematography", R.drawable.movie));
+        tabs.add(new EventChooserSet("Studios", R.drawable.microphone_variant));
+        tabs.add(new EventChooserSet("Photo Booths", R.drawable.photo_front));
+        tabs.add(new EventChooserSet("Photo Albums",R.drawable.image_album));
         mAdapter.setProfessions(tabs);
         mAdapter.setClickListener(this);
+//        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(30));
 
     }
 
@@ -179,27 +181,9 @@ public class ProfessionsActivity extends AppCompatActivity implements BaseSlider
             feedItemAnimator.animateAdd(holder);
 
             holder.name.setText(professions.get(position).getName());
+            holder.imageView.setImageResource(professions.get(position).getImg_resource());
 
-            switch(position) {
-                case 0:
-                    holder.imageView.setImageResource(R.drawable.ic_home);
-                    break;
-                case 1:
-                    holder.imageView.setImageResource(R.drawable.ic_home);
-                    break;
-                case 2:
-                    holder.imageView.setImageResource(R.drawable.ic_home);
-                    break;
-                case 3:
-                    holder.imageView.setImageResource(R.drawable.ic_home);
-                    break;
-                case 4:
-                    holder.imageView.setImageResource(R.drawable.ic_home);
-                    break;
-                case 5:
-                    holder.imageView.setImageResource(R.drawable.ic_home);
-                    break;
-            }
+
 //            Picasso.with(context).load(professions.get(position).getImg_resource()).into(holder.imageView);
         }
 
