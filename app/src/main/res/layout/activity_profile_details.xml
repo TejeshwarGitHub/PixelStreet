@@ -8,106 +8,30 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
        >
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
-            app:titleEnabled="false"
+
+        <android.support.v7.widget.Toolbar
+            
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:background="@color/blue"
-            app:contentScrim="@color/blue"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <android.support.design.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp">
-
-
-                <RelativeLayout
-                    android:paddingBottom="24dp"
-                    android:id="@+id/detailContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="#ffffff"
-                    android:paddingTop="60dp">
-
-                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingBottom="16dp">
-
-
-                        <TextView
-                            android:id="@+id/profileName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="8dp"
-                            android:text="Harshit Agarwal"
-
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/description"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="Photographer/Developer"
-                            android:textColor="@color/blue"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:id="@+id/location"
-                            android:text="Hyderabad"
-                            android:textColor="#000000"
-                            android:textSize="16sp"
-                            android:layout_marginTop="4dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-
-
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/dance"
-                    app:layout_anchor="@+id/detailContainer"
-                    app:layout_anchorGravity="top|center"
-                    app:civ_border_color="#ffffff"
-                    app:civ_border_width="2dp"/>
-            </android.support.design.widget.CoordinatorLayout>
-
-            <android.support.v7.widget.Toolbar
-                app:layout_scrollFlags="scroll"
-                app:layout_collapseMode="pin"
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize">
-
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
+            android:layout_height="?android:attr/actionBarSize"
+             />
 
 
     </android.support.design.widget.AppBarLayout>
 
+
+
     <include layout="@layout/image_container" />
+
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right|end"
-       android:layout_margin="16dp"
+        android:layout_margin="16dp"
         android:src="@drawable/ic_heart"
         android:tint="#ffffff" />
 

@@ -1,54 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="#efefef"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="pixelstreet.com.pixelstreet.ProfessionsActivity"
-    tools:showIn="@layout/activity_professions">
+    tools:showIn="@layout/app_bar_professions">
 
-    <!-- <android.support.v4.widget.NestedScrollView
-         android:layout_width="match_parent"
-         android:layout_height="match_parent">
-         <LinearLayout
-             android:orientation="vertical"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-             <com.daimajia.slider.library.SliderLayout
-                 android:id="@+id/slider"
-                 android:layout_width="match_parent"
-                 app:pager_animation="Accordion"
-                 app:auto_cycle="true"
-                 app:indicator_visibility="visible"
-                 app:pager_animation_span="1100"
-                 android:layout_height="200dp"/>
-
-             <com.daimajia.slider.library.Indicators.PagerIndicator
-                 android:id="@+id/custom_indicator"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:gravity="center"
-                 app:selected_color="#0095BF"
-                 app:unselected_color="#55333333"
-                 app:selected_drawable="@drawable/bird"
-                 app:shape="oval"
-                 app:selected_padding_left="5dp"
-                 app:selected_padding_right="5dp"
-                 app:unselected_padding_left="5dp"
-                 app:unselected_padding_right="5dp"
-                 android:layout_centerHorizontal="true"
-                 android:layout_alignParentBottom="true"
-                 app:selected_width="6dp"
-                 app:selected_height="6dp"
-                 app:unselected_width="6dp"
-                 app:unselected_height="6dp"
-                 android:layout_marginBottom="20dp" />
- -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/profession_chooser_recycler"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <!-- </LinearLayout>
- </android.support.v4.widget.NestedScrollView>-->
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:descendantFocusability="blocksDescendants">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.daimajia.slider.library.SliderLayout
+                android:layout_width="match_parent"
+                android:layout_height="232dp"
+                android:id="@+id/slider"/>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You might be looking for "
+            android:layout_marginLeft="16dp"
+            android:textSize="16sp"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="8dp"
+            android:id="@+id/profession_chooser_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp" />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

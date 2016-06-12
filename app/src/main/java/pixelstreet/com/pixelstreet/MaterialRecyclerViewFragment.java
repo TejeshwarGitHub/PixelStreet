@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pixelstreet.com.pixelstreet.helper.MaterialRecyclerViewAdapter;
-import pixelstreet.com.pixelstreet.helper.RecyclerClickListener;
+import helper.RecyclerClickListener;
 
 /**
  * Created by florentchampigny on 24/04/15.
@@ -48,7 +48,7 @@ public class MaterialRecyclerViewFragment extends Fragment implements RecyclerCl
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new MaterialRecyclerViewAdapter(getActivity().getApplicationContext(),mContentItems));
+        mAdapter = new RecyclerViewMaterialAdapter(new MaterialRecyclerViewAdapter(getActivity(),mContentItems));
         mRecyclerView.setAdapter(mAdapter);
 
         {

@@ -3,148 +3,125 @@ package pixelstreet.com.pixelstreet;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import anim.FeedItemAnimator;
-import pixelstreet.com.pixelstreet.helper.RecyclerClickListener;
-import pixelstreet.com.pixelstreet.helper.VerticalSpaceItemDecoration;
+import helper.GridSpaceItemDecoration;
+import helper.RecyclerClickListener;
 
-public class ProfessionsActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener,RecyclerClickListener,NavigationView.OnNavigationItemSelectedListener{
+public class ProfessionsActivity extends AppCompatActivity implements RecyclerClickListener {
 
     RecyclerView recyclerView;
-//    SliderLayout mDemoSlider;
-    ArrayList tabs;
-    NavigationView navigationView;
-    ActionBarDrawerToggle mDrawerToggle;
-    DrawerLayout mDrawer;
+    JSONArray recommended;
+
+    SliderLayout mSliderLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_professions);
+        setContentView(R.layout.app_bar_professions);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout_profession);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawer.setDrawerListener(toggle);
-        toggle.syncState();
-        navigationView = (NavigationView) findViewById(R.id.nav_view_profession);
-        navigationView.setNavigationItemSelectedListener(this);
-//        mDemoSlider = (SliderLayout)findViewById(R.id.slider);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
-        mDrawer.setDrawerListener(mDrawerToggle);
 
-      /*  HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        //can also put url as second parameter
-        file_maps.put("Slide 1",R.drawable.ic_slide1);
-        file_maps.put("Slide 2",R.drawable.ic_slide2);
-        file_maps.put("Slide 3",R.drawable.ic_slide3);
-        file_maps.put("Slide 4", R.drawable.ic_slide4);*/
-
-       /* for(String name : file_maps.keySet()){
-            TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-                    .description(name)
-                    .image(file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra",name);
-
-            mDemoSlider.addSlider(textSliderView);
-        }*/
-        /*mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
-        mDemoSlider.addOnPageChangeListener(this);
-*/
         recyclerView = (RecyclerView) findViewById(R.id.profession_chooser_recycler);
         EventChooserAdapter mAdapter = new EventChooserAdapter(this);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        tabs = new ArrayList<>();
-        tabs.add(new EventChooserSet("Photographer", R.drawable.camera));
-        tabs.add(new EventChooserSet("Videographer", R.drawable.video));
-        tabs.add(new EventChooserSet("Cinematography", R.drawable.movie));
-        tabs.add(new EventChooserSet("Studios", R.drawable.microphone_variant));
-        tabs.add(new EventChooserSet("Photo Booths", R.drawable.photo_front));
-        tabs.add(new EventChooserSet("Photo Albums",R.drawable.image_album));
-        mAdapter.setProfessions(tabs);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         mAdapter.setClickListener(this);
-//        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(30));
+        recyclerView.addItemDecoration(new GridSpaceItemDecoration(30));
+        recyclerView.setNestedScrollingEnabled(false);
+
+
+        mSliderLayout = (SliderLayout) findViewById(R.id.slider);
+        for (int i = 0; i < 5; i++) {
+
+            BaseSliderView baseSliderView = new MyBaseSliderView(this, i);
+            mSliderLayout.addSlider(baseSliderView);
+        }
+//        mSliderLayout.setDuration(4000);
+        mSliderLayout.startAutoCycle(6000,4000,true);
+
 
     }
 
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 
     @Override
     public void onClick(View v, int pos) {
-        startActivity(new Intent(ProfessionsActivity.this,LandingActivity.class));
+        startActivity(new Intent(ProfessionsActivity.this, LandingActivity.class));
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public void onBackPressed() {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_profession);
 
-        switch (id) {
-            case R.id.nav_home:
-                /*Fragment fragment= new Open_Land_Fragment();
-                FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.landing_container,fragment).commit();*/
-                break;
+        super.onBackPressed();
 
+    }
+
+
+    class MyBaseSliderView extends BaseSliderView {
+
+        Context context;
+        LayoutInflater inflater;
+        int position;
+
+        //todo accept a PhotographerProfile object instead
+        protected MyBaseSliderView(Context context, int position) {
+            super(context);
+            this.context = context;
+            inflater = LayoutInflater.from(context);
+            this.position = position;
         }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+
+        /**
+         * the extended class have to implement getView(), which is called by the adapter,
+         * every extended class response to render their own view.
+         *
+         * @return
+         */
+        //todo actually bind a Photographer profile object
+        @Override
+        public View getView() {
+            View v = inflater.inflate(R.layout.fragment_blank, null);
+            ImageView image = (ImageView) v.findViewById(R.id.imageView);
+            switch (position) {
+                case 0:
+                    Picasso.with(context).load(R.drawable.wallpaper1).resize(400, 300).centerCrop().into(image);
+                    break;
+                case 1:
+                    Picasso.with(context).load(R.drawable.wallpaper2).resize(400, 300).centerCrop().into(image);
+                    break;
+                case 2:
+                    Picasso.with(context).load(R.drawable.wallpaper3).resize(400, 300).centerCrop().into(image);
+                    break;
+                case 3:
+                    Picasso.with(context).load(R.drawable.wallpaper4).resize(400, 300).centerCrop().into(image);
+                    break;
+                default:
+                    Picasso.with(context).load(R.drawable.wallpaper5).resize(400, 300).centerCrop().into(image);
+                    break;
+
+            }
+            return v;
+        }
+
     }
 
     private class EventChooserAdapter extends RecyclerView.Adapter<EventChooserAdapter.MyViewHolder> {
@@ -159,17 +136,20 @@ public class ProfessionsActivity extends AppCompatActivity implements BaseSlider
             this.context = context;
             inflater = LayoutInflater.from(context);
             professions = new ArrayList<>();
-            feedItemAnimator=new FeedItemAnimator();
+            feedItemAnimator = new FeedItemAnimator();
+            professions = new ArrayList<>();
+            professions.add(new EventChooserSet("Photographer", R.drawable.camera));
+            professions.add(new EventChooserSet("Videographer", R.drawable.video));
+            professions.add(new EventChooserSet("Cinematographer", R.drawable.movie));
+            professions.add(new EventChooserSet("Studios", R.drawable.microphone_variant));
+            professions.add(new EventChooserSet("Photo Booths", R.drawable.photo_front));
+            professions.add(new EventChooserSet("Photo Albums", R.drawable.image_album));
         }
 
         public void setClickListener(RecyclerClickListener clickListener) {
             this.clickListener = clickListener;
         }
 
-        public void setProfessions(ArrayList<EventChooserSet> professions) {
-            this.professions = professions;
-            notifyDataSetChanged();
-        }
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -179,12 +159,15 @@ public class ProfessionsActivity extends AppCompatActivity implements BaseSlider
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             feedItemAnimator.animateAdd(holder);
-
             holder.name.setText(professions.get(position).getName());
             holder.imageView.setImageResource(professions.get(position).getImg_resource());
 
+        }
 
-//            Picasso.with(context).load(professions.get(position).getImg_resource()).into(holder.imageView);
+        @Override
+        public void onViewDetachedFromWindow(MyViewHolder holder) {
+            super.onViewDetachedFromWindow(holder);
+            holder.clearAnimation();
         }
 
         @Override
@@ -211,6 +194,10 @@ public class ProfessionsActivity extends AppCompatActivity implements BaseSlider
                     });
                 }
             }
+
+            public void clearAnimation() {
+                itemView.clearAnimation();
+            }
         }
     }
 
@@ -229,16 +216,6 @@ public class ProfessionsActivity extends AppCompatActivity implements BaseSlider
 
         public int getImg_resource() {
             return Img_resource;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_profession);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
@@ -44,15 +45,23 @@ public class FeedItemAnimator extends DefaultItemAnimator {
         dispatchAddFinished(viewHolder);
         return false;
     }
+    int config_longAnimTime   = 500;
+    int config_mediumAnimTime = 400;
+    int config_shortAnimTime  = 200;
+
 
     private void runEnterAnimation(final RecyclerView.ViewHolder holder, int position) {
         final int screenHeight = Utils.getScreenHeight(holder.itemView.getContext());
-        holder.itemView.setTranslationY(screenHeight);
+        holder.itemView.setScaleX(0.4f);
+        holder.itemView.setScaleY(0.4f);
+        holder.itemView.setAlpha(0f);
         holder.itemView.animate()
-                .translationY(0)
-                .setInterpolator(new DecelerateInterpolator(3.f))
-                .setDuration(500)
-                .setStartDelay(position*100)
+                .scaleX(1)
+                .scaleY(1)
+                .alpha(1)
+                .setInterpolator(new DecelerateInterpolator())
+                .setDuration(200)
+                .setStartDelay(position*20)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {

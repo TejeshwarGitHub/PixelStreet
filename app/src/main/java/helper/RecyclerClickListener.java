@@ -1,4 +1,4 @@
-package pixelstreet.com.pixelstreet.helper;
+package helper;
 
 import android.view.View;
 

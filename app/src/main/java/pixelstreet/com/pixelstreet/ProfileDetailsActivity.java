@@ -2,16 +2,20 @@ package pixelstreet.com.pixelstreet;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileDetailsActivity extends AppCompatActivity {
 
@@ -25,11 +29,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        setTitle("Harshit Agarwal");
-        setTitle("");
-
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle("");
+        setTitle("Photographer Name");
 
 
         final int[] picLinks = {R.drawable.sample_0,
@@ -67,6 +67,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+                Log.e("bind","called");
 //                if (holder instanceof MyViewHolder) {
                 MyViewHolder holder1 = (MyViewHolder) holder;
                 Picasso.with(ProfileDetailsActivity.this).load(picLinks[position])
@@ -82,12 +83,15 @@ public class ProfileDetailsActivity extends AppCompatActivity {
                 return picLinks.length;
             }
         });
+        recyclerView.setNestedScrollingEnabled(false);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
 
 
         recyclerView.setLayoutManager(gridLayoutManager);
 
     }
+
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -96,15 +100,6 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
-        }
-    }
-
-    class MyHeaderViewHolder extends RecyclerView.ViewHolder {
-
-
-        public MyHeaderViewHolder(View itemView) {
-            super(itemView);
-//            imageView = (ImageView) itemView.findViewById(R.id.imageView);
         }
     }
 

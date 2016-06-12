@@ -4,37 +4,38 @@
     android:id="@+id/profess_1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     app:cardCornerRadius="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
     >
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="16dp">
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <ImageView
+
+            android:layout_gravity="center_horizontal"
             android:tint="@color/colorAccent"
             android:id="@+id/profession_chooser_image"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:padding="6dp"
+            android:padding="10dp"
             android:src="@drawable/ic_email" />
 
         <TextView
+            android:layout_marginTop="4dp"
             android:id="@+id/profession_chooser_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:text="Technical"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_gravity="center_horizontal"
+            android:text="Cinematographer"
+            android:textSize="18sp"
+            />
 
     </LinearLayout>
 

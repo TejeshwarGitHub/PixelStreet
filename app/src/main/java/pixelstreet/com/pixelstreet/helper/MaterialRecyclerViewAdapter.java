@@ -1,6 +1,7 @@
 package pixelstreet.com.pixelstreet.helper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.plumillonforge.android.chipview.ChipView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pixelstreet.com.pixelstreet.ProfileDetailsActivity;
 import pixelstreet.com.pixelstreet.R;
 
 /**
@@ -101,6 +103,12 @@ public class MaterialRecyclerViewAdapter extends RecyclerView.Adapter<MaterialRe
             mImageHorizontal.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
             horizontalImageScrollAdapter = new HorizontalImageScrollAdapter();
             mImageHorizontal.setAdapter(horizontalImageScrollAdapter);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(new Intent(mContext, ProfileDetailsActivity.class));
+                }
+            });
         }
 
     }
