@@ -39,7 +39,7 @@ public class FeedItemAnimator extends DefaultItemAnimator {
 
         if (viewHolder.getLayoutPosition() > lastAddAnimatedItem) {
             lastAddAnimatedItem++;
-            runEnterAnimation(viewHolder,viewHolder.getLayoutPosition());
+            runEnterAnimation(viewHolder,viewHolder.getLayoutPosition()+1);
             return false;
         }
         dispatchAddFinished(viewHolder);

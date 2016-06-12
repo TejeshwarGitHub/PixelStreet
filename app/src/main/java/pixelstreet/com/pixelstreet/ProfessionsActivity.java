@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,8 +57,18 @@ public class ProfessionsActivity extends AppCompatActivity implements RecyclerCl
             mSliderLayout.addSlider(baseSliderView);
         }
 //        mSliderLayout.setDuration(4000);
-        mSliderLayout.startAutoCycle(6000,4000,true);
+        mSliderLayout.startAutoCycle(6000, 4000, true);
 
+        mSliderLayout.setScaleX(0.4f);
+        mSliderLayout.setScaleY(0.4f);
+        mSliderLayout.setAlpha(0f);
+        mSliderLayout.animate()
+                .scaleX(1)
+                .scaleY(1)
+                .alpha(1)
+                .setInterpolator(new DecelerateInterpolator())
+                .setDuration(200)
+                .start();
 
     }
 
